@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISA-Decoder_16Bit", "ISA-Decoder_16Bit.csproj", "{D63F5C5D-F584-4BE9-82AA-F5360881BD01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D63F5C5D-F584-4BE9-82AA-F5360881BD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D63F5C5D-F584-4BE9-82AA-F5360881BD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D63F5C5D-F584-4BE9-82AA-F5360881BD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D63F5C5D-F584-4BE9-82AA-F5360881BD01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB5DE63C-1E43-4CB6-944F-C28770DB94E6}
+	EndGlobalSection
+EndGlobal
