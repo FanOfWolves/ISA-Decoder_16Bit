@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace ISA_Decoder_16Bit {
     abstract class Operation {
-        protected string verb;
-        protected string operationText;
 
         /// <summary>
         /// Given a bitstring, write out the actual operation text.
         /// </summary>
         /// <returns></returns>
-        public abstract string DecodeOperation();
+        public abstract string DecodeOperation(int inputBits);
     }
 }

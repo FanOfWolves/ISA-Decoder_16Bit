@@ -6,17 +6,9 @@ using System.Threading.Tasks;
 
 namespace ISA_Decoder_16Bit {
     class ArithmeticType : InstructionType {
-        int InstructionTypeID = 1;
-
-
-
-
-        public override string DecodeInstruction(int bitInstruction) {
-            throw new NotImplementedException();
-        }
-
-        internal override void SetOpCode() {
-
+        public ArithmeticType() {
+            base.InstructionTypeID = 1;
+            base.opcodeStartBit = 10;
         }
     }
 }

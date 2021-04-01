@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ISA_Decoder_16Bit;
-
+﻿///
+///TODO: Add try-catch inside while loop to catch bad 
+///
+using System;
 
 namespace ISA_Decoder_16Bit {
     class Program {
-
-
         static void Main() {
             // Read Input
             String hexinput = "0000";
             int binaryInput;
-
-            // [TODO]: Have exit condition
 
             while (true) {
                 Console.WriteLine("Input a 4-digit hex string.\n");
@@ -25,69 +18,54 @@ namespace ISA_Decoder_16Bit {
                 //binaryInput = Convert.ToUInt16(hexinput, 16);   // [TODO]: Convert to UInt16.TryParse()
                 binaryInput = Convert.ToInt32(hexinput, 16);
 
+                // Break condition: end program on 0x0000
+                if (binaryInput == 0) {
+                    Console.WriteLine("Smell you later.\n");
+                    System.Environment.Exit(0);
+                }
 
-                DecodeInput(binaryInput);
+                // Else decode input
+                string output = DecodeInput(binaryInput);
 
-                // [DEBUG] Display output
-                //Console.WriteLine(binaryInput);
-
-                // Begin decoding
-
+                // Display output
+                Console.WriteLine(output);
             }
-
-            
-
         }
 
-        private static void DecodeInput(int input) {
-            
+        private static string DecodeInput(int input) {
 
+            InstructionType ourInstruction = null;
 
             // I Check instruction type (Bits 14-15)
             // I.A SHOW bits 14-15
-            int bitmask = BitUtilities.CreateBitMask(14,15); //1100 0000 0000
+            int bitmask = BitUtilities.CreateBitMask(14, 15); //1100 0000 0000
             int maskedinput = input & bitmask;
-            int opCodeSize = 0;
             switch (maskedinput) {
                 case 0x0000:    //00 - data transfer
                     Console.Write("00");
-                    opCodeSize = 1;
+                    ourInstruction = new DataTransferType();
                     break;
                 case 0x4000:    //01 - arithmetic/logical
                     Console.Write("01");
-                    opCodeSize = 4;
+                    ourInstruction = new ArithmeticType();
                     break;
                 case 0x8000:    //10 - flow control
                     Console.Write("10");
-                    opCodeSize = 2;
+                    ourInstruction = new FlowControlType();
                     break;
                 default:
                     Console.Write("Instruction Type broke");
                     break;
             }
-            Console.Write(" ");
-            // II Check Operation Code
-            // II.A Check size of operation code
 
-            // II.B Prepare mask
-            int endBit = 15 - 2;
-            int startBit = endBit - opCodeSize;
-            bitmask = BitUtilities.CreateBitMask(startBit, endBit);
-            maskedinput = input & bitmask;
-
-            Console.Write(input & BitUtilities.CreateBitMask(startBit, endBit));
-
-            // II.C Mask and compare
-            switch(opCodeSize) {
-                
-                    
+            try {
+                // Decode input
+                string output = ourInstruction.DecodeInstruction(input);
+                return output;
             }
-            // III Other bits
-            // III.A Check if needed
-
-
+            catch (Exception e) {
+                return $"{e.Message} You dun fucked up.";
+            }
         }
-
-
-        
+    } 
 }
