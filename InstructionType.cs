@@ -7,16 +7,24 @@ using System.Threading.Tasks;
 namespace ISA_Decoder_16Bit {
     abstract class InstructionType {
         protected int InstructionTypeID;
-        StringBuilder instructionDescription;
-        string verb;
+        protected int opcodeStartBit;
+        protected int opcodeEndBit;
+        protected int opcode;
+        protected Operation operation;
+        protected List<int> availableOpcodes;
 
-        public abstract string DecodeInstruction(int bitInstruction);
+        public string DecodeInstruction(int bitInstruction) {
+            // (1) Determine opcode
+            DecodeOpcode(bitInstruction);
 
-        protected abstract void SetOpCode(int bitStream);
 
-        protected abstract void SetFirstOperand(int bitStream);
+        }
 
-        protected abstract void SetSecondOperand(int bitStream);
+        protected Operation DecodeOpcode(int bitInstruction) {
+            // Get mask for opcode.
+            opcode = bitInstruction & BitUtilities.CreateBitMask(opcodeStartBit, opcodeEndBit);
+        }
 
+        public abstract void PopulateOpcodeList();
     }
 }

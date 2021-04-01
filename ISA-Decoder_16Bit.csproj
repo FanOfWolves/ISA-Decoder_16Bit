@@ -43,13 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ADDoperation.cs" />
     <Compile Include="ArithmeticType.cs" />
     <Compile Include="BitUtilities.cs" />
     <Compile Include="DataTransferType.cs" />
     <Compile Include="FlowControlType.cs" />
+    <Compile Include="ImmediateOperation.cs" />
     <Compile Include="InstructionType.cs" />
+    <Compile Include="Operation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TwoOperandOperation.cs" />
     <Compile Include="UnspecifiedType.cs" />
   </ItemGroup>
   <ItemGroup>
