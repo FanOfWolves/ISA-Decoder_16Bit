@@ -38,7 +38,7 @@
         private void DecodeFirstOperand(int inputBits) {
             operandOneValue = inputBits & BitUtilities.CreateBitMask(operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
-                operandTwoMeaning = $"OP1: Ya fucke* up";
+                operandTwoMeaning = $"OP1: Ya messed up";     
             }
             else {
                 operandOneMeaning = $"r{operandOneValue}";
@@ -70,7 +70,7 @@
         }
 
         /// <summary>
-        /// This bitch looks through ALL our available fields and constructs an English sentence.
+        /// This badboy    looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
             return $"{verb} {operandOneMeaning} from {operandTwoMeaning}, store result in {operandOneMeaning}";

@@ -42,15 +42,12 @@ namespace ISA_Decoder_16Bit {
             int maskedinput = input & bitmask;
             switch (maskedinput) {
                 case 0x0000:    //00 - data transfer
-                    Console.Write("00");
                     ourInstruction = new DataTransferType();
                     break;
                 case 0x4000:    //01 - arithmetic/logical
-                    Console.Write("01");
                     ourInstruction = new ArithmeticType();
                     break;
                 case 0x8000:    //10 - flow control
-                    Console.Write("10");
                     ourInstruction = new FlowControlType();
                     break;
                 default:
@@ -64,7 +61,7 @@ namespace ISA_Decoder_16Bit {
                 return output;
             }
             catch (Exception e) {
-                return $"{e.Message} You dun fucked up.";
+                return $"{e.Message} You dun messed up.";
             }
         }
     } 

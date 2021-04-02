@@ -1,14 +1,14 @@
-﻿namespace ISA_Decoder_16Bit {
-    class ADDoperation: Operation {
-        string verb = "Add";                    // The main verb used for the message
+namespace ISA_Decoder_16Bit {
+    class LOADoperation: Operation {
+        string verb = "Load";                    // The main verb used for the message
 
-        int operandOneEndBit = 8;               // The end bit of operand one
-        int operandOneStartBit = 5;             // The starting bit of operand one
+        int operandOneEndBit = 11;               // The end bit of operand one
+        int operandOneStartBit = 8;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
         int operandTwoEndBit = 4;               // The end bit of operand two
-        int operandTwoStartBit = 1;             // The start bit of operand two
+        int operandTwoStartBit = 7;             // The start bit of operand two
         int operandTwoValue;                    // The value of operand two
         string operandTwoMeaning;               // The meaning of operand two 
 
@@ -18,7 +18,7 @@
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
-        public ADDoperation() {
+        public LOADoperation() {
 
         }
 
@@ -50,7 +50,7 @@
         private void DecodeFirstOperand(int inputBits) {
             operandOneValue = inputBits & BitUtilities.CreateBitMask(operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
-                operandTwoMeaning = $"OP1: Ya messed up";     
+                operandTwoMeaning = $"OP1: Ya messed* up";
             }
             else {
                 operandOneMeaning = $"r{operandOneValue}";
@@ -66,7 +66,7 @@
             else {
                 operandTwoValue = inputBits & BitUtilities.CreateBitMask(operandTwoStartBit, operandTwoEndBit);
                 if (operandTwoValue < 0 || operandTwoValue > 15) {
-                    operandTwoMeaning = $"OP2: Ya fucke* up";
+                    operandTwoMeaning = $"OP2: Ya messed* up";
                 }
                 operandTwoMeaning = $"r{operandTwoValue}";
             } 
@@ -85,7 +85,7 @@
         /// This badboy    looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
-            return $"{verb} {operandOneMeaning} to {operandTwoMeaning}, store result in {operandOneMeaning}";
+            return $"{verb} {operandTwoMeaning} into {operandOneMeaning}";
         }
 
     }

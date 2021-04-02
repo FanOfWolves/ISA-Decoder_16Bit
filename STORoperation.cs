@@ -1,24 +1,29 @@
-﻿namespace ISA_Decoder_16Bit {
-    class ADDoperation: Operation {
-        string verb = "Add";                    // The main verb used for the message
+namespace ISA_Decoder_16Bit {
+    class STORoperation: Operation {
+        string verb = "Store";                    // The main verb used for the message
 
-        int operandOneEndBit = 8;               // The end bit of operand one
-        int operandOneStartBit = 5;             // The starting bit of operand one
+        int operandOneEndBit = 9;               // The end bit of operand one
+        int operandOneStartBit = 6;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
-        int operandTwoEndBit = 4;               // The end bit of operand two
-        int operandTwoStartBit = 1;             // The start bit of operand two
+        int operandTwoEndBit = 5;               // The end bit of operand two
+        int operandTwoStartBit = 2;             // The start bit of operand two
         int operandTwoValue;                    // The value of operand two
         string operandTwoMeaning;               // The meaning of operand two 
 
-        int immediateSwitchStartBit = 9;        // The start bit of the immediate switch
-        int immediateSwitchEndBit = 9;          // The end bit of the immediate switch
+        int addressingModeEndBit = 11;
+        int addressingModeStartBit = 10;
+        int addressingModeValue;
+        string addressingModeMeaning;
+
+        int immediateSwitchStartBit = 12;        // The start bit of the immediate switch
+        int immediateSwitchEndBit = 12;          // The end bit of the immediate switch
         int immediateSwitchValue;               // The value of the immediate switch
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
-        public ADDoperation() {
+        public STORoperation() {
 
         }
 
@@ -31,6 +36,8 @@
             // Decode Immediate
             DecodeImmediateSwitch(inputBits);
 
+            //grab addressing mode
+            DecodeAddressingValue(inputBits);
             // Decode Operand One
             DecodeFirstOperand(inputBits);
 
@@ -50,7 +57,7 @@
         private void DecodeFirstOperand(int inputBits) {
             operandOneValue = inputBits & BitUtilities.CreateBitMask(operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
-                operandTwoMeaning = $"OP1: Ya messed up";     
+                operandTwoMeaning = $"OP1: Ya messed* up";
             }
             else {
                 operandOneMeaning = $"r{operandOneValue}";
@@ -66,26 +73,48 @@
             else {
                 operandTwoValue = inputBits & BitUtilities.CreateBitMask(operandTwoStartBit, operandTwoEndBit);
                 if (operandTwoValue < 0 || operandTwoValue > 15) {
-                    operandTwoMeaning = $"OP2: Ya fucke* up";
+                    operandTwoMeaning = $"OP2: Ya messed* up";
                 }
                 operandTwoMeaning = $"r{operandTwoValue}";
             } 
         }
 
 
+        private void DecodeAddressingValue(int inputBits)
+        {
+            addressingModeValue = inputBits & BitUtilities.CreateBitMask(addressingModeStartBit,addressingModeEndBit);
+            switch(addressingModeValue)
+            {
+                case 0:
+                       addressingModeMeaning = "immediate";
+                        break;
+                case 1:
+                       addressingModeMeaning = "register indirect, indexed";
+                        break;
+                case 2:
+                       addressingModeMeaning = "direct";
+                        break;
+                case 3:
+                       addressingModeMeaning = "Error, invalid addressing mode.";
+                        break;
+            }
+        }
+
         /// <summary>
         /// Decode value of the immediateSwitch
         /// </summary>
         /// <param name="inputBits">our instruction</param>
-        private void DecodeImmediateSwitch(int inputBits) {
+        private void DecodeImmediateSwitch(int inputBits)
+        {
             immediateSwitchValue = inputBits & BitUtilities.CreateBitMask(immediateSwitchStartBit, immediateSwitchEndBit);
         }
 
         /// <summary>
         /// This badboy    looks through ALL our available fields and constructs an English sentence.
         /// </summary>
-        private string GetHumanText() {
-            return $"{verb} {operandOneMeaning} to {operandTwoMeaning}, store result in {operandOneMeaning}";
+        private string GetHumanText() 
+        {
+           return $"{verb} {operandTwoMeaning} into {operandOneMeaning}, using the addressing Mode {addressingModeMeaning}";
         }
 
     }

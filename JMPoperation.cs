@@ -1,24 +1,25 @@
-﻿namespace ISA_Decoder_16Bit {
-    class ADDoperation: Operation {
-        string verb = "Add";                    // The main verb used for the message
+namespace ISA_Decoder_16Bit {
+    class JMPoperation: Operation {
+        string verb = "Jump";                    // The main verb used for the message
 
-        int operandOneEndBit = 8;               // The end bit of operand one
-        int operandOneStartBit = 5;             // The starting bit of operand one
+        int operandOneEndBit = 9;               // The end bit of operand one
+        int operandOneStartBit = 6;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
-        int operandTwoEndBit = 4;               // The end bit of operand two
-        int operandTwoStartBit = 1;             // The start bit of operand two
-        int operandTwoValue;                    // The value of operand two
-        string operandTwoMeaning;               // The meaning of operand two 
+        //only two addressing modes, one bit needed
+        int addressingModeEndBit = 10;
+        int addressingModeStartBit = 10;
+        int addressingModeValue;
+        string addressingModeMeaning;
 
-        int immediateSwitchStartBit = 9;        // The start bit of the immediate switch
-        int immediateSwitchEndBit = 9;          // The end bit of the immediate switch
+        int immediateSwitchStartBit = 11;        // The start bit of the immediate switch
+        int immediateSwitchEndBit = 11;          // The end bit of the immediate switch
         int immediateSwitchValue;               // The value of the immediate switch
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
-        public ADDoperation() {
+        public JMPoperation() {
 
         }
 
@@ -31,11 +32,13 @@
             // Decode Immediate
             DecodeImmediateSwitch(inputBits);
 
+            //grab addressing mode
+            DecodeAddressingValue(inputBits);
             // Decode Operand One
             DecodeFirstOperand(inputBits);
 
             // Decode Operand Two
-            DecodeSecondOperand(inputBits);
+           // DecodeSecondOperand(inputBits);
 
             // Get readable text
             return GetHumanText();
@@ -50,42 +53,47 @@
         private void DecodeFirstOperand(int inputBits) {
             operandOneValue = inputBits & BitUtilities.CreateBitMask(operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
-                operandTwoMeaning = $"OP1: Ya messed up";     
+                operandOneMeaning = $"OP1: Ya messed* up";
             }
             else {
                 operandOneMeaning = $"r{operandOneValue}";
             }
         }
 
-        private void DecodeSecondOperand(int inputBits) {
-            // Immediate or Register?
-            if(immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.
-                operandTwoValue = inputBits & BitUtilities.CreateBitMask(immediateOperandStartBit, operandTwoEndBit);
-                operandTwoMeaning = $"#{operandTwoValue}";
-            }
-            else {
-                operandTwoValue = inputBits & BitUtilities.CreateBitMask(operandTwoStartBit, operandTwoEndBit);
-                if (operandTwoValue < 0 || operandTwoValue > 15) {
-                    operandTwoMeaning = $"OP2: Ya fucke* up";
-                }
-                operandTwoMeaning = $"r{operandTwoValue}";
-            } 
-        }
 
+        private void DecodeAddressingValue(int inputBits)
+        {
+            addressingModeValue = inputBits & BitUtilities.CreateBitMask(addressingModeStartBit,addressingModeEndBit);
+            switch(addressingModeValue)
+            {
+                case 0:
+                       addressingModeMeaning = "Register Indirect, indexed";
+                        break;
+                case 1:
+                       addressingModeMeaning = "Direct";
+                        break;
+
+                default:
+                       addressingModeMeaning = "Error, invalid addressing mode.";
+                        break;
+            }
+        }
 
         /// <summary>
         /// Decode value of the immediateSwitch
         /// </summary>
         /// <param name="inputBits">our instruction</param>
-        private void DecodeImmediateSwitch(int inputBits) {
+        private void DecodeImmediateSwitch(int inputBits)
+        {
             immediateSwitchValue = inputBits & BitUtilities.CreateBitMask(immediateSwitchStartBit, immediateSwitchEndBit);
         }
 
         /// <summary>
         /// This badboy    looks through ALL our available fields and constructs an English sentence.
         /// </summary>
-        private string GetHumanText() {
-            return $"{verb} {operandOneMeaning} to {operandTwoMeaning}, store result in {operandOneMeaning}";
+        private string GetHumanText() 
+        {
+           return $"{verb} to a location using {operandOneMeaning}, using the addressing Mode {addressingModeMeaning}";
         }
 
     }

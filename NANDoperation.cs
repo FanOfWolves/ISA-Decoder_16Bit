@@ -1,6 +1,6 @@
-﻿namespace ISA_Decoder_16Bit {
-    class ADDoperation: Operation {
-        string verb = "Add";                    // The main verb used for the message
+namespace ISA_Decoder_16Bit {
+    class NANDoperation: Operation {
+        string verb = "NAND";                    // The main verb used for the message
 
         int operandOneEndBit = 8;               // The end bit of operand one
         int operandOneStartBit = 5;             // The starting bit of operand one
@@ -18,7 +18,7 @@
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
-        public ADDoperation() {
+        public NANDoperation() {
 
         }
 
@@ -85,7 +85,7 @@
         /// This badboy    looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
-            return $"{verb} {operandOneMeaning} to {operandTwoMeaning}, store result in {operandOneMeaning}";
+            return $"{verb} {operandOneMeaning} with {operandTwoMeaning}, store result in {operandOneMeaning}";
         }
 
     }
