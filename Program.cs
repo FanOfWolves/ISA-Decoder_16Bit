@@ -16,6 +16,7 @@ namespace ISA_Decoder_16Bit {
 
                 // Convert Input to unsigned 16-bit integer
                 //binaryInput = Convert.ToUInt16(hexinput, 16);   // [TODO]: Convert to UInt16.TryParse()
+            
                 binaryInput = Convert.ToInt32(hexinput, 16);
 
                 // Break condition: end program on 0x0000

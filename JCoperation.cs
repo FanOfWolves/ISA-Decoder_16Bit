@@ -1,27 +1,21 @@
 namespace ISA_Decoder_16Bit {
     class JCoperation: Operation {
-        string verb = "Jump Conditional";                    // The main verb used for the message
+        string verb = "Conditional Jump";                    // The main verb used for the message
 
-        int operandOneEndBit = 6;               // The end bit of operand one
-        int operandOneStartBit = 3;             // The starting bit of operand one
+        int operandOneEndBit = 7;               // The end bit of operand one
+        int operandOneStartBit = 4;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
-
-
-        //only two addressing modes, one bit needed
-        int addressingModeEndBit = 10;
-        int addressingModeStartBit = 10;
-        int addressingModeValue;
         string addressingModeMeaning;
 
         int conditionalEndBit = 10;
-        int conditionalStartBit = 7;
+        int conditionalStartBit = 8;
         int conditionalValue;
         string conditionalMeaning;
 
-        int immediateSwitchStartBit = 11;        // The start bit of the immediate switch
-        int immediateSwitchEndBit = 11;          // The end bit of the immediate switch
+        int immediateSwitchStartBit = 11;       // The start bit of the immediate switch
+        int immediateSwitchEndBit = 11;         // The end bit of the immediate switch
         int immediateSwitchValue;               // The value of the immediate switch
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
@@ -39,14 +33,10 @@ namespace ISA_Decoder_16Bit {
             // Decode Immediate
             DecodeImmediateSwitch(inputBits);
 
-            //grab addressing mode
-            DecodeAddressingValue(inputBits);
             // Decode Operand One
             DecodeFirstOperand(inputBits);
             // decode conditional Value
             DecodeConditionalValue(inputBits);
-            // Decode Operand Two
-           // DecodeSecondOperand(inputBits);
 
             // Get readable text
             return GetHumanText();
@@ -59,11 +49,14 @@ namespace ISA_Decoder_16Bit {
         /// </summary>
         /// <param name="inputBits">instruction bits</param>
         private void DecodeFirstOperand(int inputBits) {
-            operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
-            if (operandOneValue < 0 || operandOneValue > 15) {
-                operandOneMeaning = $"OP1: Ya messed* up";
+            if (immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.
+                operandOneValue = BitUtilities.MaskInput(inputBits, immediateOperandStartBit, operandOneEndBit);
+                operandOneMeaning = $"#{operandOneValue}";
             }
             else {
+                operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
+                if (operandOneValue < 0 || operandOneValue > 15)
+                    throw new System.Exception("Bad Operand One!");
                 operandOneMeaning = $"r{operandOneValue}";
             }
         }
@@ -74,55 +67,13 @@ namespace ISA_Decoder_16Bit {
             conditionalValue = inputBits & BitUtilities.CreateBitMask(conditionalStartBit,conditionalEndBit);
 
             switch(conditionalValue) {
-                case 0: {
-                        conditionalMeaning = "Equal to";
-                        break;
-                    }
-                case 1: {
-                        conditionalMeaning = "Not Equal to";
-                        break;
-                    }
-                case 2: {
-                        conditionalMeaning = "greater than";
-                        break;
-                    }
-                case 3: {
-                        conditionalMeaning = "less than";
-                        break;
-                    }
-                case 4: {
-                        conditionalMeaning = "above or equal to";
-                        break;
-                    }
-                case 5: {
-                        conditionalMeaning = "Below or equal to";
-                        break;
-                    }
-				default: {
-                        conditionalMeaning = "Invalid conditional";
-                        break;
-                    }
-            }
-
-
-        }
-
-
-        private void DecodeAddressingValue(int inputBits)
-        {
-            addressingModeValue = inputBits & BitUtilities.CreateBitMask(addressingModeStartBit,addressingModeEndBit);
-            switch(addressingModeValue)
-            {
-                case 0:
-                       addressingModeMeaning = "Register Indirect, indexed";
-                        break;
-                case 1:
-                       addressingModeMeaning = "Direct";
-                        break;
-
-                default:
-                       addressingModeMeaning = "Error, invalid addressing mode.";
-                        break;
+                case 0: conditionalMeaning = "Equal to"; break;
+                case 1: conditionalMeaning = "Not Equal to"; break;
+                case 2: conditionalMeaning = "greater than"; break;
+                case 3: conditionalMeaning = "less than"; break;
+                case 4: conditionalMeaning = "above or equal to"; break;
+                case 5: conditionalMeaning = "Below or equal to"; break;
+				default: throw new System.Exception("Invalid Conditional!");
             }
         }
 
@@ -133,14 +84,18 @@ namespace ISA_Decoder_16Bit {
         private void DecodeImmediateSwitch(int inputBits)
         {
             immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
+            if (immediateSwitchValue == 0) // if using register, this is an indirect index reference
+                addressingModeMeaning = "an Indexed Indirect Register";
+            else
+                addressingModeMeaning = "a direct address.";
         }
 
         /// <summary>
-        /// This badboy    looks through ALL our available fields and constructs an English sentence.
+        /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() 
         {
-          return $"{verb} to the location specified using {operandOneMeaning}, using the condition {conditionalMeaning}, using the addressing Mode {addressingModeMeaning}";
+          return $"If flags correspond to conditional {conditionalMeaning}, then {verb} to the location specified using {operandOneMeaning} as {addressingModeMeaning}";
         }
 
     }
