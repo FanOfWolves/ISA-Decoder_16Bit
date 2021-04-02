@@ -43,16 +43,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ADCoperation.cs" />
     <Compile Include="ADDoperation.cs" />
+    <Compile Include="ANDoperation.cs" />
     <Compile Include="ArithmeticType.cs" />
     <Compile Include="BitUtilities.cs" />
+    <Compile Include="CMPoperation.cs" />
     <Compile Include="DataTransferType.cs" />
+    <Compile Include="DIVoperation.cs" />
     <Compile Include="EnumsForISA.cs" />
     <Compile Include="FlowControlType.cs" />
     <Compile Include="InstructionType.cs" />
+    <Compile Include="JCoperation.cs" />
+    <Compile Include="JMPoperation.cs" />
+    <Compile Include="LOADoperation.cs" />
+    <Compile Include="MODoperation.cs" />
+    <Compile Include="MULoperation.cs" />
+    <Compile Include="NANDoperation.cs" />
+    <Compile Include="NOPoperation.cs" />
     <Compile Include="Operation.cs" />
+    <Compile Include="ORoperation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="STORoperation.cs" />
     <Compile Include="SUBoperation.cs" />
   </ItemGroup>
   <ItemGroup>
