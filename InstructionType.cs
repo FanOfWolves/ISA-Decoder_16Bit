@@ -54,7 +54,7 @@ namespace ISA_Decoder_16Bit {
                 case (int)opcodeIdentificationHexLiterals.hexSTOR:
                     return new STORoperation();
                 default:
-                    return null;
+                    throw new System.Exception("Invalid Opcode.");
             }
         }
     }

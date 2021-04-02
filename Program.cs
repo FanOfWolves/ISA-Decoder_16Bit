@@ -1,5 +1,5 @@
-﻿///
-///TODO: Add try-catch inside while loop to catch bad 
+﻿/// 
+/// 
 ///
 using System;
 
@@ -51,8 +51,7 @@ namespace ISA_Decoder_16Bit {
                     ourInstruction = new FlowControlType();
                     break;
                 default:
-                    Console.Write("Instruction Type broke");
-                    break;
+                    return "Invalid Instruction Type!";
             }
 
             try {
