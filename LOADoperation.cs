@@ -82,7 +82,7 @@ namespace ISA_Decoder_16Bit {
         }
 
         /// <summary>
-        /// This badboy    looks through ALL our available fields and constructs an English sentence.
+        /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
             return $"{verb} {operandTwoMeaning} into {operandOneMeaning}";

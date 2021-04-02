@@ -1,6 +1,6 @@
 namespace ISA_Decoder_16Bit {
     class JMPoperation: Operation {
-        string verb = "Jump";                    // The main verb used for the message
+        string verb = "Jump";                   // The main verb used for the message
 
         int operandOneEndBit = 9;               // The end bit of operand one
         int operandOneStartBit = 6;             // The starting bit of operand one
@@ -8,13 +8,10 @@ namespace ISA_Decoder_16Bit {
         string operandOneMeaning;               // The meaning of operand one
 
         //only two addressing modes, one bit needed
-        int addressingModeEndBit = 10;
-        int addressingModeStartBit = 10;
-        int addressingModeValue;
         string addressingModeMeaning;
 
-        int immediateSwitchStartBit = 11;        // The start bit of the immediate switch
-        int immediateSwitchEndBit = 11;          // The end bit of the immediate switch
+        int immediateSwitchStartBit = 11;       // The start bit of the immediate switch
+        int immediateSwitchEndBit = 11;         // The end bit of the immediate switch
         int immediateSwitchValue;               // The value of the immediate switch
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
@@ -32,13 +29,8 @@ namespace ISA_Decoder_16Bit {
             // Decode Immediate
             DecodeImmediateSwitch(inputBits);
 
-            //grab addressing mode
-            DecodeAddressingValue(inputBits);
             // Decode Operand One
             DecodeFirstOperand(inputBits);
-
-            // Decode Operand Two
-           // DecodeSecondOperand(inputBits);
 
             // Get readable text
             return GetHumanText();
@@ -61,24 +53,6 @@ namespace ISA_Decoder_16Bit {
         }
 
 
-        private void DecodeAddressingValue(int inputBits)
-        {
-            addressingModeValue = inputBits & BitUtilities.CreateBitMask(addressingModeStartBit,addressingModeEndBit);
-            switch(addressingModeValue)
-            {
-                case 0:
-                       addressingModeMeaning = "Register Indirect, indexed";
-                        break;
-                case 1:
-                       addressingModeMeaning = "Direct";
-                        break;
-
-                default:
-                       addressingModeMeaning = "Error, invalid addressing mode.";
-                        break;
-            }
-        }
-
         /// <summary>
         /// Decode value of the immediateSwitch
         /// </summary>
@@ -86,6 +60,10 @@ namespace ISA_Decoder_16Bit {
         private void DecodeImmediateSwitch(int inputBits)
         {
             immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
+            if (immediateSwitchValue == 0) // if using register, this is an indirect index reference
+                addressingModeMeaning = "an Indexed Indirect Register";
+            else
+                addressingModeMeaning = "a direct address.";
         }
 
         /// <summary>
@@ -93,7 +71,7 @@ namespace ISA_Decoder_16Bit {
         /// </summary>
         private string GetHumanText() 
         {
-           return $"{verb} to a location using {operandOneMeaning}, using the addressing Mode {addressingModeMeaning}";
+           return $"{verb} to a location using {operandOneMeaning} as {addressingModeMeaning}";
         }
 
     }
