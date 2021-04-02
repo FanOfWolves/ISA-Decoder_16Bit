@@ -2,13 +2,13 @@ namespace ISA_Decoder_16Bit {
     class CMPoperation: Operation {
         string verb = "Compare";                    // The main verb used for the message
 
-        int operandOneEndBit = 9;               // The end bit of operand one
-        int operandOneStartBit = 6;             // The starting bit of operand one
+        int operandOneEndBit =10;               // The end bit of operand one
+        int operandOneStartBit = 7;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
-        int operandTwoEndBit = 5;               // The end bit of operand two
-        int operandTwoStartBit = 2;             // The start bit of operand two
+        int operandTwoEndBit = 6;               // The end bit of operand two
+        int operandTwoStartBit = 3;             // The start bit of operand two
         int operandTwoValue;                    // The value of operand two
         string operandTwoMeaning;               // The meaning of operand two 
 
@@ -51,7 +51,7 @@ namespace ISA_Decoder_16Bit {
         /// </summary>
         /// <param name="inputBits">instruction bits</param>
         private void DecodeFirstOperand(int inputBits) {
-            operandOneValue = inputBits & BitUtilities.CreateBitMask(operandOneStartBit, operandOneEndBit);
+            operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
                 operandTwoMeaning = $"OP1: Ya messed up";     
             }
@@ -63,11 +63,11 @@ namespace ISA_Decoder_16Bit {
         private void DecodeSecondOperand(int inputBits) {
             // Immediate or Register?
             if(immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.
-                operandTwoValue = inputBits & BitUtilities.CreateBitMask(immediateOperandStartBit, operandTwoEndBit);
+                operandTwoValue = BitUtilities.MaskInput(inputBits, immediateOperandStartBit, operandTwoEndBit);
                 operandTwoMeaning = $"#{operandTwoValue}";
             }
             else {
-                operandTwoValue = inputBits & BitUtilities.CreateBitMask(operandTwoStartBit, operandTwoEndBit);
+                operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);
                 if (operandTwoValue < 0 || operandTwoValue > 15) {
                     operandTwoMeaning = $"OP2: Ya Done Goofed";
                 }
@@ -81,7 +81,7 @@ namespace ISA_Decoder_16Bit {
         /// </summary>
         /// <param name="inputBits">our instruction</param>
         private void DecodeImmediateSwitch(int inputBits) {
-            immediateSwitchValue = inputBits & BitUtilities.CreateBitMask(immediateSwitchStartBit, immediateSwitchEndBit);
+            immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
             if(immediateSwitchValue == (int)ImmediateSwitchEnum.register) {
                 immediateSwitchMeaning = "Register";
 			}else {

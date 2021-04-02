@@ -59,7 +59,7 @@ namespace ISA_Decoder_16Bit {
         /// </summary>
         /// <param name="inputBits">instruction bits</param>
         private void DecodeFirstOperand(int inputBits) {
-            operandOneValue = inputBits & BitUtilities.CreateBitMask(operandOneStartBit, operandOneEndBit);
+            operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
                 operandOneMeaning = $"OP1: Ya messed* up";
             }
@@ -132,7 +132,7 @@ namespace ISA_Decoder_16Bit {
         /// <param name="inputBits">our instruction</param>
         private void DecodeImmediateSwitch(int inputBits)
         {
-            immediateSwitchValue = inputBits & BitUtilities.CreateBitMask(immediateSwitchStartBit, immediateSwitchEndBit);
+            immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
         }
 
         /// <summary>

@@ -48,7 +48,7 @@ namespace ISA_Decoder_16Bit {
         /// </summary>
         /// <param name="inputBits">instruction bits</param>
         private void DecodeFirstOperand(int inputBits) {
-            operandOneValue = inputBits & BitUtilities.CreateBitMask(operandOneStartBit, operandOneEndBit);
+            operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
                 operandTwoMeaning = $"OP1: Ya messed* up";
             }
@@ -60,11 +60,11 @@ namespace ISA_Decoder_16Bit {
         private void DecodeSecondOperand(int inputBits) {
             // Immediate or Register?
             if(immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.
-                operandTwoValue = inputBits & BitUtilities.CreateBitMask(immediateOperandStartBit, operandTwoEndBit);
+                operandTwoValue = BitUtilities.MaskInput(inputBits, immediateOperandStartBit, operandTwoEndBit);
                 operandTwoMeaning = $"#{operandTwoValue}";
             }
             else {
-                operandTwoValue = inputBits & BitUtilities.CreateBitMask(operandTwoStartBit, operandTwoEndBit);
+                operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);
                 if (operandTwoValue < 0 || operandTwoValue > 15) {
                     operandTwoMeaning = $"OP2: Ya messed* up";
                 }
@@ -78,7 +78,7 @@ namespace ISA_Decoder_16Bit {
         /// </summary>
         /// <param name="inputBits">our instruction</param>
         private void DecodeImmediateSwitch(int inputBits) {
-            immediateSwitchValue = inputBits & BitUtilities.CreateBitMask(immediateSwitchStartBit, immediateSwitchEndBit);
+            immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
         }
 
         /// <summary>

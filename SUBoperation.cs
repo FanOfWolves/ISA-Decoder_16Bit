@@ -36,7 +36,7 @@
         }
 
         private void DecodeFirstOperand(int inputBits) {
-            operandOneValue = inputBits & BitUtilities.CreateBitMask(operandOneStartBit, operandOneEndBit);
+            operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
                 operandTwoMeaning = $"OP1: Ya messed up";     
             }
@@ -46,7 +46,7 @@
         }
 
         private void DecodeSecondOperand(int inputBits) {
-            operandTwoValue = inputBits & BitUtilities.CreateBitMask(operandTwoStartBit, operandTwoEndBit);
+            operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);
 
             // Immediate or Register?
             if (immediateSwitchValue == 0) { // if register
@@ -66,7 +66,7 @@
         /// </summary>
         /// <param name="inputBits">our instruction</param>
         private void DecodeImmediateSwitch(int inputBits) {
-            immediateSwitchValue = inputBits & BitUtilities.CreateBitMask(immediateSwitchStartBit, immediateSwitchEndBit);
+            immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
         }
 
         /// <summary>

@@ -18,6 +18,11 @@ namespace ISA_Decoder_16Bit {
             return (int)(((1 << size) - 1) & (number >> position));
         }
 
+
+        public static int MaskInput(int input, int startBit, int endBit) {
+            return (input & CreateBitMask(startBit, endBit)) >> startBit;
+        }
+
         // Everything between STARTBIT and ENDBIT is preserved. Else 0'd out.
         public static int CreateBitMask(int startBit, int endBit) {
             int mask = 0;
