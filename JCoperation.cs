@@ -2,15 +2,19 @@ namespace ISA_Decoder_16Bit {
     class JCoperation: Operation {
         string verb = "Conditional Jump";                    // The main verb used for the message
 
-        int operandOneEndBit = 6;               // The end bit of operand one
-        int operandOneStartBit = 3;             // The starting bit of operand one
+        int operandOneEndBit = 7;               // The end bit of operand one
+        int operandOneStartBit = 4;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
         string addressingModeMeaning;
 
+        int negativeBit = 10;
+        int negativeBitValue = 0;
+        string negativeBitMeaning;
+        
         int conditionalEndBit = 9;
-        int conditionalStartBit = 7;
+        int conditionalStartBit = 8;
         int conditionalValue;
         string conditionalMeaning;
 
@@ -35,12 +39,25 @@ namespace ISA_Decoder_16Bit {
 
             // Decode Operand One
             DecodeFirstOperand(inputBits);
+
+            // Decode negative
+            DecodeNegativeBit(inputBits);
+
             // decode conditional Value
             DecodeConditionalValue(inputBits);
 
             // Get readable text
             return GetHumanText();
         }
+
+        private void DecodeNegativeBit(int inputBits) {
+            negativeBitValue = BitUtilities.MaskInput(inputBits, negativeBit, negativeBit); // Get value from negative bit.
+            if (negativeBitValue == 0) {
+                negativeBitMeaning = "+";
+            }
+            else negativeBitMeaning = "-";
+        }
+
 
         /// <summary>
         /// Decode the first operand of this instruction by masking it and 
@@ -51,7 +68,7 @@ namespace ISA_Decoder_16Bit {
         private void DecodeFirstOperand(int inputBits) {
             if (immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.
                 operandOneValue = BitUtilities.MaskInput(inputBits, immediateOperandStartBit, operandOneEndBit);
-                operandOneMeaning = $"#{operandOneValue}";
+                operandOneMeaning = $"{operandOneValue}";
             }
             else {
                 operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
@@ -64,7 +81,7 @@ namespace ISA_Decoder_16Bit {
 
         private void DecodeConditionalValue(int inputBits)
         {
-            conditionalValue = inputBits & BitUtilities.CreateBitMask(conditionalStartBit,conditionalEndBit);
+            conditionalValue = BitUtilities.MaskInput(inputBits, conditionalStartBit, conditionalEndBit);
 
             switch(conditionalValue) {
                 case 0: conditionalMeaning = "Equal to"; break;
@@ -94,7 +111,11 @@ namespace ISA_Decoder_16Bit {
         /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
-          return $"If flags correspond to conditional {conditionalMeaning}, then {verb} to the location specified using {operandOneMeaning} as {addressingModeMeaning}";
+            if (immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // if an immediate, use the negative bit
+                return $"If flags correspond to conditional {conditionalMeaning}, then {verb} {negativeBitMeaning}{operandOneMeaning} bytes.";
+
+            }
+          return $"If flags correspond to conditional \"{conditionalMeaning}\", then {verb} to the location specified using {operandOneMeaning} as {addressingModeMeaning}";
         }
     }
 }
