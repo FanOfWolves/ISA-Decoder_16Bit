@@ -16,6 +16,11 @@ namespace ISA_Decoder_16Bit {
         protected int opcode;
         protected Operation operation;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputBits">instruction bits</param>
+        /// <returns>string representation of ISA code.</returns>
         public string DecodeInstruction(int inputBits) {
             // (1) Determine opcode
             operation = DecodeOpcode(inputBits);
@@ -25,6 +30,11 @@ namespace ISA_Decoder_16Bit {
 
         }
 
+        /// <summary>
+        /// Get the opcode.
+        /// </summary>
+        /// <param name="inputBits">instruction bits</param>
+        /// <returns>Operation</returns>
         public Operation DecodeOpcode(int inputBits) {
             // Get mask for opcode + InstructionID
             opcode = inputBits & BitUtilities.CreateBitMask(opcodeStartBit, 15);
