@@ -52,7 +52,6 @@ namespace ISA_Decoder_16Bit {
             }
         }
 
-
         /// <summary>
         /// Decode value of the immediateSwitch
         /// </summary>
@@ -67,7 +66,7 @@ namespace ISA_Decoder_16Bit {
         }
 
         /// <summary>
-        /// This badboy    looks through ALL our available fields and constructs an English sentence.
+        /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() 
         {

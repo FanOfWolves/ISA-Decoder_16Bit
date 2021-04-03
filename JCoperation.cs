@@ -2,15 +2,17 @@ namespace ISA_Decoder_16Bit {
     class JCoperation: Operation {
         string verb = "Conditional Jump";                    // The main verb used for the message
 
-        int operandOneEndBit = 7;               // The end bit of operand one
-        int operandOneStartBit = 4;             // The starting bit of operand one
+        int operandOneEndBit = 6;               // The end bit of operand one
+        int operandOneStartBit = 3;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
+        
+        int negatve
 
         string addressingModeMeaning;
 
-        int conditionalEndBit = 10;
-        int conditionalStartBit = 8;
+        int conditionalEndBit = 9;
+        int conditionalStartBit = 7;
         int conditionalValue;
         string conditionalMeaning;
 
@@ -19,7 +21,7 @@ namespace ISA_Decoder_16Bit {
         int immediateSwitchValue;               // The value of the immediate switch
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
-
+        
         public JCoperation() {
 
         }
@@ -93,10 +95,8 @@ namespace ISA_Decoder_16Bit {
         /// <summary>
         /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
-        private string GetHumanText() 
-        {
+        private string GetHumanText() {
           return $"If flags correspond to conditional {conditionalMeaning}, then {verb} to the location specified using {operandOneMeaning} as {addressingModeMeaning}";
         }
-
     }
 }
