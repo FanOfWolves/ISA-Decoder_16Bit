@@ -33,12 +33,6 @@ namespace ISA_Decoder_16Bit {
                         throw new Exception("Input cannot be greater than an unsigned short.");
                     }
 
-                    // Break condition: end program on 0x0000
-                    if (binaryInput == 0) {
-                        Console.WriteLine("Smell you later.\n");
-                        System.Environment.Exit(0);
-                    }
-
                     // Else decode input
                     string output = DecodeInput(binaryInput);
 
