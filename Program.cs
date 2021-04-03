@@ -39,9 +39,7 @@ namespace ISA_Decoder_16Bit {
                     // Display output
                     Console.WriteLine(output);
                 }
-                catch (Exception e)
-                {
-
+                catch (Exception e) {
                     Console.WriteLine($"Could not read input '{hexinput}': {e.Message}");
                 }
             }

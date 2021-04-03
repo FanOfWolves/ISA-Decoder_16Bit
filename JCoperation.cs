@@ -9,19 +9,19 @@ namespace ISA_Decoder_16Bit {
     class JCoperation: Operation {
         string verb = "Conditional Jump";       // The main verb used for the message
 
-        int operandOneEndBit = 7;               // The end bit of operand one
         int operandOneStartBit = 4;             // The starting bit of operand one
+        int operandOneEndBit = 7;               // The end bit of operand one
         int operandOneValue;                    // The value of operand one
-        string operandOneMeaning;               // The meaning of operand one
+        string operandOneMeaning;              
 
-        string addressingModeMeaning;           //
+        string addressingModeMeaning;           // A string of the addressing mode
 
-        int negativeBit = 10;                   //
-        int negativeBitValue = 0;               //
-        string negativeBitMeaning;              //
-        
-        int conditionalEndBit = 9;              // The
-        int conditionalStartBit = 8;            // The 
+        int negativeBit = 10;                   // Location of the bit used for negative/positive
+        int negativeBitValue = 0;               // 0 == Positive. 1 == Negative
+        string negativeBitMeaning;
+
+        int conditionalStartBit = 8;
+        int conditionalEndBit = 9;              
         int conditionalValue;                   // The integer value of the conditional
         string conditionalMeaning;              // The string of the meaning of the conditional
 
@@ -50,6 +50,10 @@ namespace ISA_Decoder_16Bit {
             return GetHumanText();             // Get readable text
         }
 
+        /// <summary>
+        /// Decodes the valuie at the negative bit.
+        /// </summary>
+        /// <param name="inputBits">bits to be used.</param>
         private void DecodeNegativeBit(int inputBits) {
             negativeBitValue = BitUtilities.MaskInput(inputBits, negativeBit, negativeBit); // Get value from negative bit.
             if (negativeBitValue == 0) 
@@ -77,7 +81,10 @@ namespace ISA_Decoder_16Bit {
             }
         }
 
-
+        /// <summary>
+        /// Decodes the conditional that we look for with this statement.
+        /// </summary>
+        /// <param name="inputBits">instruction bits</param>
         private void DecodeConditionalValue(int inputBits)
         {
             conditionalValue = BitUtilities.MaskInput(inputBits, conditionalStartBit, conditionalEndBit);
