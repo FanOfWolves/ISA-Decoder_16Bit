@@ -1,22 +1,29 @@
+
+
+
 namespace ISA_Decoder_16Bit {
+
+    /// <summary>
+    /// A one-operand operation that jumps if a condition is met.
+    /// </summary>
     class JCoperation: Operation {
-        string verb = "Conditional Jump";                    // The main verb used for the message
+        string verb = "Conditional Jump";       // The main verb used for the message
 
         int operandOneEndBit = 7;               // The end bit of operand one
         int operandOneStartBit = 4;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
-        string addressingModeMeaning;
+        string addressingModeMeaning;           //
 
-        int negativeBit = 10;
-        int negativeBitValue = 0;
-        string negativeBitMeaning;
+        int negativeBit = 10;                   //
+        int negativeBitValue = 0;               //
+        string negativeBitMeaning;              //
         
-        int conditionalEndBit = 9;
-        int conditionalStartBit = 8;
-        int conditionalValue;
-        string conditionalMeaning;
+        int conditionalEndBit = 9;              // The
+        int conditionalStartBit = 8;            // The 
+        int conditionalValue;                   // The integer value of the conditional
+        string conditionalMeaning;              // The string of the meaning of the conditional
 
         int immediateSwitchStartBit = 11;       // The start bit of the immediate switch
         int immediateSwitchEndBit = 11;         // The end bit of the immediate switch
@@ -24,8 +31,10 @@ namespace ISA_Decoder_16Bit {
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
         
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public JCoperation() {
-
         }
 
         /// <summary>
@@ -33,28 +42,18 @@ namespace ISA_Decoder_16Bit {
         /// </summary>
         /// <param name="inputBits">a bit stream of the instruction</param>
         /// <returns>a text translation of the instruction</returns>
-        public override string DecodeOperation(int inputBits) {
-            // Decode Immediate
-            DecodeImmediateSwitch(inputBits);
-
-            // Decode Operand One
-            DecodeFirstOperand(inputBits);
-
-            // Decode negative
-            DecodeNegativeBit(inputBits);
-
-            // decode conditional Value
-            DecodeConditionalValue(inputBits);
-
-            // Get readable text
-            return GetHumanText();
+        public override string DecodeOperation(int inputBits) {      
+            DecodeImmediateSwitch(inputBits);  // Decode Immediate
+            DecodeFirstOperand(inputBits);     // Decode Operand One
+            DecodeNegativeBit(inputBits);      // Decode negative
+            DecodeConditionalValue(inputBits); // decode conditional Value
+            return GetHumanText();             // Get readable text
         }
 
         private void DecodeNegativeBit(int inputBits) {
             negativeBitValue = BitUtilities.MaskInput(inputBits, negativeBit, negativeBit); // Get value from negative bit.
-            if (negativeBitValue == 0) {
+            if (negativeBitValue == 0) 
                 negativeBitMeaning = "+";
-            }
             else negativeBitMeaning = "-";
         }
 
@@ -111,10 +110,8 @@ namespace ISA_Decoder_16Bit {
         /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
-            if (immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // if an immediate, use the negative bit
-                return $"If flags correspond to conditional {conditionalMeaning}, then {verb} {negativeBitMeaning}{operandOneMeaning} bytes.";
-
-            }
+            if (immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) // if an immediate, use the negative bit
+                return $"If flags correspond to conditional {conditionalMeaning}, then {verb} {negativeBitMeaning}{operandOneMeaning} bytes.";        
           return $"If flags correspond to conditional \"{conditionalMeaning}\", then {verb} to the location specified using {operandOneMeaning} as {addressingModeMeaning}";
         }
     }

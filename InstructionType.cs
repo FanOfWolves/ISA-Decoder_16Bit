@@ -1,4 +1,13 @@
-﻿using System.Collections.Generic;
+﻿// ------------------------------------------------------------------------------------------------------------------------
+// File name:       InstructionType.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
 
 namespace ISA_Decoder_16Bit {
     abstract class InstructionType {

@@ -1,3 +1,5 @@
+
+
 namespace ISA_Decoder_16Bit {
     class LOADoperation: Operation {
         string verb = "Load";                    // The main verb used for the message
