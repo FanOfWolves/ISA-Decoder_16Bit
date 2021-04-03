@@ -46,8 +46,7 @@ namespace ISA_Decoder_16Bit {
 
             // Decode Operand Two
             DecodeSecondOperand(inputBits);
-            //Console.WriteLine($" this is ");
-            //Console.WriteLine($"this is addressing mdoe value {addressingModeValue} this is the immediate swtich value {immediateSwitchValue} this is the op1 meaning {operandOneValue} this is the op2 meaning {operandTwoValue}");
+            
             // Get readable text
             return GetHumanText();
         }
