@@ -82,7 +82,7 @@ namespace ISA_Decoder_16Bit {
 
         private void DecodeAddressingValue(int inputBits)
         {
-            addressingModeValue = inputBits & BitUtilities.CreateBitMask(addressingModeStartBit,addressingModeEndBit);
+            addressingModeValue = inputBits & BitUtilities.MaskInput(inputBits, addressingModeStartBit, addressingModeEndBit);
             switch(addressingModeValue)
             {
                 case 0:
