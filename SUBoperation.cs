@@ -79,7 +79,8 @@ namespace ISA_Decoder_16Bit {
 
             // Immediate or Register?
             if (immediateSwitchValue == 0) { // if register
-                if (operandTwoValue < 0 || operandTwoValue > 15) {
+                if (operandTwoValue < 0 || operandTwoValue > 15)
+                { //used to check if valid register
                     operandTwoMeaning = $"OP2: Ya messed up";
                 }
                 operandTwoMeaning = $"r{operandTwoValue}";

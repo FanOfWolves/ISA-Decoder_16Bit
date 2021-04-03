@@ -54,7 +54,8 @@ namespace ISA_Decoder_16Bit
         private void DecodeFirstOperand(int inputBits)
         {
             operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
-            if (operandOneValue < 0 || operandOneValue > 15) {
+            if (operandOneValue < 0 || operandOneValue > 15)
+            { //used to check if valid register
                 operandOneMeaning = $"OP1: Ya messed up";
             }
             else {
