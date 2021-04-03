@@ -4,24 +4,12 @@
     {
         string verb = "Negate";                    // The main verb used for the message
 
-        int operandOneEndBit = 8;               // The end bit of operand one
-        int operandOneStartBit = 5;             // The starting bit of operand one
+        int operandOneEndBit = 9;               // The end bit of operand one
+        int operandOneStartBit = 6;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
-        int operandTwoEndBit = 4;               // The end bit of operand two
-        int operandTwoStartBit = 1;             // The start bit of operand two
-        int operandTwoValue;                    // The value of operand two
-        string operandTwoMeaning;               // The meaning of operand two 
-
-        int immediateSwitchStartBit = 9;        // The start bit of the immediate switch
-        int immediateSwitchEndBit = 9;          // The end bit of the immediate switch
-        int immediateSwitchValue;               // The value of the immediate switch
-
-        int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
-
-        public NOToperation()
-        {
+        public NOToperation() {
 
         }
 
@@ -32,14 +20,8 @@
         /// <returns>a text translation of the instruction</returns>
         public override string DecodeOperation(int inputBits)
         {
-            // Decode Immediate
-            //DecodeImmediateSwitch(inputBits);
-
             // Decode Operand One
             DecodeFirstOperand(inputBits);
-
-            // Decode Operand Two
-            //DecodeSecondOperand(inputBits);
 
             // Get readable text
             return GetHumanText();
@@ -54,32 +36,18 @@
         private void DecodeFirstOperand(int inputBits)
         {
             operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
-            if (operandOneValue < 0 || operandOneValue > 15)
-            {
-                operandTwoMeaning = $"OP1: Ya messed up";
+            if (operandOneValue < 0 || operandOneValue > 15) {
+                operandOneMeaning = $"OP1: Ya messed up";
             }
-            else
-            {
+            else {
                 operandOneMeaning = $"r{operandOneValue}";
             }
         }
 
-
-
         /// <summary>
-        /// Decode value of the immediateSwitch
+        /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
-        /// <param name="inputBits">our instruction</param>
-        private void DecodeImmediateSwitch(int inputBits)
-        {
-            immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
-        }
-
-        /// <summary>
-        /// This badboy    looks through ALL our available fields and constructs an English sentence.
-        /// </summary>
-        private string GetHumanText()
-        {
+        private string GetHumanText() {
             return $"{verb} {operandOneMeaning} and store in {operandOneMeaning}";
         }
 

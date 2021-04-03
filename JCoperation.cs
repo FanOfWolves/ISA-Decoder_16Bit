@@ -6,8 +6,6 @@ namespace ISA_Decoder_16Bit {
         int operandOneStartBit = 3;             // The starting bit of operand one
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
-        
-        int negatve
 
         string addressingModeMeaning;
 
