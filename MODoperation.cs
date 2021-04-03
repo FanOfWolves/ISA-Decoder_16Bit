@@ -1,4 +1,18 @@
+// ------------------------------------------------------------------------------------------------------------------------
+// File name:       MODoperation.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
 namespace ISA_Decoder_16Bit {
+
+    /// <summary>
+    /// two operand operation that mods the first operand by the second operand and stores it into the first operand (a register)
+    /// </summary>
     class MODoperation: Operation {
         string verb = "Mod";                    // The main verb used for the message
 
@@ -18,6 +32,10 @@ namespace ISA_Decoder_16Bit {
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public MODoperation() {
 
         }
@@ -57,6 +75,11 @@ namespace ISA_Decoder_16Bit {
             }
         }
 
+
+        /// <summary>
+        /// decode the second operand of this instruction and find its value and meaning
+        /// </summary>
+        /// <param name="inputBits">instruction bits</param>
         private void DecodeSecondOperand(int inputBits) {
             // Immediate or Register?
             if(immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.

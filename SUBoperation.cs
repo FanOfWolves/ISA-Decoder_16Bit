@@ -1,4 +1,17 @@
-﻿namespace ISA_Decoder_16Bit {
+﻿// ------------------------------------------------------------------------------------------------------------------------
+// File name:       SUBoperation.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
+namespace ISA_Decoder_16Bit {
+    /// <summary>
+    /// two operand operation that subtracts operand 2 from operand 1 and stores it in operand 1
+    /// </summary>
     class SUBoperation : Operation {
         string verb = "Subtract";
 
@@ -16,11 +29,18 @@
         int immediateSwitchEndBit = 9;
         int immediateSwitchValue;
 
-
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public SUBoperation() {
 
         }
 
+        /// <summary>
+        /// used to decode the operation and provide a human readable string.
+        /// </summary>
+        /// <param name="inputBits"></param>
+        /// <returns></returns>
         public override string DecodeOperation(int inputBits) {
             // Decode Immediate
             DecodeImmediateSwitch(inputBits);
@@ -35,6 +55,11 @@
             return GetHumanText();
         }
 
+
+        /// <summary>
+        /// used to decode the first operand and get its meaning and value
+        /// </summary>
+        /// <param name="inputBits"></param>
         private void DecodeFirstOperand(int inputBits) {
             operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
             if (operandOneValue < 0 || operandOneValue > 15) {
@@ -45,6 +70,10 @@
             }
         }
 
+        /// <summary>
+        /// used to decode the second operand and get its meaning and value
+        /// </summary>
+        /// <param name="inputBits">instruction bits</param>
         private void DecodeSecondOperand(int inputBits) {
             operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);
 

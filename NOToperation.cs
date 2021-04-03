@@ -1,5 +1,19 @@
-﻿namespace ISA_Decoder_16Bit
+﻿// ------------------------------------------------------------------------------------------------------------------------
+// File name:       NOToperation.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
+namespace ISA_Decoder_16Bit
 {
+
+    /// <summary>
+    /// one operand instruction that negates the value in operand 1 and store it into operand 1 
+    /// </summary>
     class NOToperation : Operation
     {
         string verb = "Negate";                    // The main verb used for the message
@@ -9,6 +23,10 @@
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public NOToperation() {
 
         }

@@ -1,4 +1,17 @@
+// ------------------------------------------------------------------------------------------------------------------------
+// File name:       MULoperation.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
 namespace ISA_Decoder_16Bit {
+    /// <summary>
+    /// two operand operation that multiplies the operand1 and operand 1 and store it into operand1 ( a register)
+    /// </summary>
     class MULoperation: Operation {
         string verb = "Multiply";                    // The main verb used for the message
 
@@ -18,6 +31,10 @@ namespace ISA_Decoder_16Bit {
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public MULoperation() {
 
         }
@@ -57,6 +74,11 @@ namespace ISA_Decoder_16Bit {
             }
         }
 
+
+        /// <summary>
+        /// decode the second operand and get its value and meaning
+        /// </summary>
+        /// <param name="inputBits"></param>
         private void DecodeSecondOperand(int inputBits) {
             // Immediate or Register?
             if(immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.

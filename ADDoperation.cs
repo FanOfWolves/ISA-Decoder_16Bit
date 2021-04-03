@@ -1,4 +1,18 @@
-﻿namespace ISA_Decoder_16Bit {
+﻿// ------------------------------------------------------------------------------------------------------------------------
+// File name:       ADDoperation.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
+namespace ISA_Decoder_16Bit {
+
+    /// <summary>
+    /// this operation add the values of the first and second operand and store in the first operand (a register)
+    /// </summary>
     class ADDoperation: Operation {
         string verb = "Add";                    // The main verb used for the message
 
@@ -18,6 +32,10 @@
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public ADDoperation() {
 
         }
@@ -57,6 +75,11 @@
             }
         }
 
+
+        /// <summary>
+        /// decodes the second operand and get its value and meaning
+        /// </summary>
+        /// <param name="inputBits"></param>
         private void DecodeSecondOperand(int inputBits) {
             // Immediate or Register?
             if(immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.
