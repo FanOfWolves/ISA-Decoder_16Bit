@@ -9,6 +9,9 @@
 // Creation Date: 03/31/2021
 // ------------------------------------------------------------------------------------------------------------------------
 namespace ISA_Decoder_16Bit {
+    /// <summary>
+    /// two operand operation that compares the operands via resultless subtraction that sets the flags
+    /// </summary>
     class CMPoperation: Operation {
         string verb = "Compare";                    // The main verb used for the message
 
