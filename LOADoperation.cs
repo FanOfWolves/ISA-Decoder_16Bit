@@ -7,13 +7,18 @@ namespace ISA_Decoder_16Bit {
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
-        int operandTwoEndBit = 4;               // The end bit of operand two
-        int operandTwoStartBit = 7;             // The start bit of operand two
+        int operandTwoEndBit = 7;               // The end bit of operand two
+        int operandTwoStartBit = 4;             // The start bit of operand two
         int operandTwoValue;                    // The value of operand two
         string operandTwoMeaning;               // The meaning of operand two 
 
-        int immediateSwitchStartBit = 9;        // The start bit of the immediate switch
-        int immediateSwitchEndBit = 9;          // The end bit of the immediate switch
+        int addressingModeEndBit = 12;
+        int addressingModeStartBit = 11;
+        int addressingModeValue;
+        string addressingModeMeaning;
+
+        int immediateSwitchStartBit = 10;        // The start bit of the immediate switch
+        int immediateSwitchEndBit = 10;          // The end bit of the immediate switch
         int immediateSwitchValue;               // The value of the immediate switch
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
@@ -36,6 +41,8 @@ namespace ISA_Decoder_16Bit {
 
             // Decode Operand Two
             DecodeSecondOperand(inputBits);
+
+            DecodeAddressingValue(inputBits);
 
             // Get readable text
             return GetHumanText();
@@ -81,11 +88,35 @@ namespace ISA_Decoder_16Bit {
             immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
         }
 
+        private void DecodeAddressingValue(int inputBits)
+        {
+            addressingModeValue = BitUtilities.MaskInput(inputBits, addressingModeStartBit, addressingModeEndBit);
+            switch (addressingModeValue)
+            {
+                case 1:
+                    addressingModeMeaning = "immediate";
+                    break;
+                case 0:
+                    addressingModeMeaning = "register indirect, indexed";
+                    break;
+                case 2:
+                    addressingModeMeaning = "direct";
+                    break;
+                case 3:
+                    addressingModeMeaning = "Error, invalid addressing mode.";
+                    break;
+            }
+        }
+
+
+
+
+
         /// <summary>
         /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
-            return $"{verb} {operandTwoMeaning} into {operandOneMeaning}";
+            return $"{verb} {operandTwoMeaning} into {operandOneMeaning}, using the addressing mode {addressingModeMeaning}";
         }
 
     }
