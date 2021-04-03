@@ -7,8 +7,6 @@ namespace ISA_Decoder_16Bit {
         int operandOneValue;                    // The value of operand one
         string operandOneMeaning;               // The meaning of operand one
 
-
-
         string addressingModeMeaning;
 
         int conditionalEndBit = 9;
