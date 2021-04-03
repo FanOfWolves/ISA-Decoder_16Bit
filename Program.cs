@@ -11,7 +11,7 @@ namespace ISA_Decoder_16Bit {
             int binaryInput;
 
             while (true) {
-                Console.WriteLine("Input a 4-digit hex string.\n");
+                Console.WriteLine("Input a 4-digit hex string or \"XXXX\" to exit.\n");
                 hexinput = Console.ReadLine();
 
                 // Convert Input to unsigned 16-bit integer
@@ -19,7 +19,19 @@ namespace ISA_Decoder_16Bit {
 
                 try
                 {
+                    if (hexinput.ToUpper() == "XXXX")
+                    {
+                        Console.WriteLine("Program exited.");
+                        break;
+                    }
+
                     binaryInput = Convert.ToInt32(hexinput, 16);
+
+                    //Check if larger than Uint16...
+                    if (binaryInput > ushort.MaxValue)
+                    {
+                        throw new Exception("Input cannot be greater than an unsigned short.");
+                    }
 
                     // Break condition: end program on 0x0000
                     if (binaryInput == 0) {
