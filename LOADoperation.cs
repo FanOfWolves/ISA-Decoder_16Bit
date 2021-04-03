@@ -78,7 +78,7 @@ namespace ISA_Decoder_16Bit {
         /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
-            return $"{verb} the value found in {operandTwoMeaning} into {operandOneMeaning}";
+            return $"{verb} the value pointed to by {operandTwoMeaning} into {operandOneMeaning}";
         }
 
     }
