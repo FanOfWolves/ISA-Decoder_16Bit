@@ -1,3 +1,4 @@
+using System;
 namespace ISA_Decoder_16Bit {
     class STORoperation: Operation {
         string verb = "Store";                    // The main verb used for the message
@@ -23,10 +24,12 @@ namespace ISA_Decoder_16Bit {
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
+
+       
         public STORoperation() {
 
         }
-
+           
         /// <summary>
         /// Decodes the input bits. This calls all the other functions.
         /// </summary>
@@ -43,7 +46,8 @@ namespace ISA_Decoder_16Bit {
 
             // Decode Operand Two
             DecodeSecondOperand(inputBits);
-
+            Console.WriteLine($" this is ");
+            Console.WriteLine($"this is addressing mdoe value {addressingModeValue} this is the immediate swtich value {immediateSwitchValue} this is the op1 meaning {operandOneValue} this is the op2 meaning {operandTwoValue}");
             // Get readable text
             return GetHumanText();
         }
@@ -82,7 +86,7 @@ namespace ISA_Decoder_16Bit {
 
         private void DecodeAddressingValue(int inputBits)
         {
-            addressingModeValue = inputBits & BitUtilities.MaskInput(inputBits, addressingModeStartBit, addressingModeEndBit);
+            addressingModeValue = BitUtilities.MaskInput(inputBits, addressingModeStartBit, addressingModeEndBit);
             switch(addressingModeValue)
             {
                 case 0:
