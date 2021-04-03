@@ -87,9 +87,9 @@ namespace ISA_Decoder_16Bit {
                 operandTwoMeaning = $"#{operandTwoValue}";
             }
             else {
-                operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);
-                if (operandTwoValue < 0 || operandTwoValue > 15) {
-                    operandTwoMeaning = $"OP2: Ya messed up";
+                operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);  // This is register.
+                if (operandTwoValue < 0 || operandTwoValue > 15) {  // Check if it is one of our general purpose registers.
+                    operandTwoMeaning = $"OP2: Ya messed up"; 
                 }
                 operandTwoMeaning = $"r{operandTwoValue}";
             } 
