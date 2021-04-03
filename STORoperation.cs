@@ -38,7 +38,9 @@ namespace ISA_Decoder_16Bit {
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
 
-       
+       /// <summary>
+       /// default constructor
+       /// </summary>
         public STORoperation() {
 
         }
