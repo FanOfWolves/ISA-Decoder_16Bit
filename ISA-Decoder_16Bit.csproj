@@ -48,6 +48,7 @@
     <Compile Include="ANDoperation.cs" />
     <Compile Include="ArithmeticType.cs" />
     <Compile Include="BitUtilities.cs" />
+    <Compile Include="NOToperation.cs" />
     <Compile Include="CMPoperation.cs" />
     <Compile Include="DataTransferType.cs" />
     <Compile Include="DIVoperation.cs" />

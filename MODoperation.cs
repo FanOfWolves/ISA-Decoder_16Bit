@@ -66,7 +66,7 @@ namespace ISA_Decoder_16Bit {
             else {
                 operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);
                 if (operandTwoValue < 0 || operandTwoValue > 15) {
-                    operandTwoMeaning = $"OP2: Ya fucke* up";
+                    operandTwoMeaning = $"OP2: Ya messed up";
                 }
                 operandTwoMeaning = $"r{operandTwoValue}";
             } 

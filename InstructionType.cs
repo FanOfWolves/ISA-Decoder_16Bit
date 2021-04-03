@@ -38,7 +38,7 @@ namespace ISA_Decoder_16Bit {
                 case (int)opcodeIdentificationHexLiterals.hexOR:
                     return new ORoperation();
                 case (int)opcodeIdentificationHexLiterals.hexNOT:
-                    return new NOPoperation();
+                    return new NOToperation();
                 case (int)opcodeIdentificationHexLiterals.hexNAND:
                     return new NANDoperation();
                 case (int)opcodeIdentificationHexLiterals.hexJMP:
