@@ -80,10 +80,10 @@ namespace ISA_Decoder_16Bit {
                 operandOneValue = BitUtilities.MaskInput(inputBits, immediateOperandStartBit, operandOneEndBit);
                 operandOneMeaning = $"{operandOneValue}";
             }
-            else {
-                operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);
-                if (operandOneValue < 0 || operandOneValue > 15)
-                    throw new System.Exception("Bad Operand One!");
+            else { // this is a register value
+                operandOneValue = BitUtilities.MaskInput(inputBits, operandOneStartBit, operandOneEndBit);  // mask it
+                if (operandOneValue < 0 || operandOneValue > 15)                    // is it one of our general registers?
+                    throw new System.Exception("Bad Operand One!");                 // if not, BAD
                 operandOneMeaning = $"r{operandOneValue}";
             }
         }
