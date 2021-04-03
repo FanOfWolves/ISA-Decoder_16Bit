@@ -34,7 +34,6 @@ namespace ISA_Decoder_16Bit {
         /// Default Construction
         /// </summary>
         public JMPoperation() {
-
         }
 
         /// <summary>
