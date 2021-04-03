@@ -1,4 +1,13 @@
-﻿using System.Collections.Generic;
+﻿// ------------------------------------------------------------------------------------------------------------------------
+// File name:       InstructionType.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
 
 namespace ISA_Decoder_16Bit {
     abstract class InstructionType {
@@ -7,6 +16,11 @@ namespace ISA_Decoder_16Bit {
         protected int opcode;
         protected Operation operation;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputBits">instruction bits</param>
+        /// <returns>string representation of ISA code.</returns>
         public string DecodeInstruction(int inputBits) {
             // (1) Determine opcode
             operation = DecodeOpcode(inputBits);
@@ -16,6 +30,11 @@ namespace ISA_Decoder_16Bit {
 
         }
 
+        /// <summary>
+        /// Get the opcode.
+        /// </summary>
+        /// <param name="inputBits">instruction bits</param>
+        /// <returns>Operation</returns>
         public Operation DecodeOpcode(int inputBits) {
             // Get mask for opcode + InstructionID
             opcode = inputBits & BitUtilities.CreateBitMask(opcodeStartBit, 15);

@@ -1,4 +1,18 @@
+// ------------------------------------------------------------------------------------------------------------------------
+// File name:       JMPoperation
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
+
 namespace ISA_Decoder_16Bit {
+    /// <summary>
+    /// A one operand operation that jumps to an address: either through register refernece, or directly back/forward.
+    /// </summary>
     class JMPoperation: Operation {
         string verb = "Jump";                   // The main verb used for the message
 
@@ -16,6 +30,9 @@ namespace ISA_Decoder_16Bit {
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
+        /// <summary>
+        /// Default Construction
+        /// </summary>
         public JMPoperation() {
 
         }
@@ -62,7 +79,7 @@ namespace ISA_Decoder_16Bit {
             if (immediateSwitchValue == 0) // if using register, this is an indirect index reference
                 addressingModeMeaning = "an Indexed Indirect Register";
             else
-                addressingModeMeaning = "a direct address.";
+                addressingModeMeaning = "a direct increment.";
         }
 
         /// <summary>

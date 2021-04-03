@@ -1,6 +1,13 @@
-﻿/// 
-/// 
-///
+﻿// ------------------------------------------------------------------------------------------------------------------------
+// File name:       Program.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
 using System;
 
 namespace ISA_Decoder_16Bit {
@@ -12,31 +19,19 @@ namespace ISA_Decoder_16Bit {
 
             while (true) {
                 Console.WriteLine("Input a 4-digit hex string or \"XXXX\" to exit.\n");
+                // Read input
                 hexinput = Console.ReadLine();
-
                 // Convert Input to unsigned 16-bit integer
-                //binaryInput = Convert.ToUInt16(hexinput, 16);   // [TODO]: Convert to UInt16.TryParse()
-
-                try
-                {
-                    if (hexinput.ToUpper() == "XXXX")
-                    {
+                try {
+                    // Exit on EXIT CODE
+                    if (hexinput.ToUpper() == "XXXX") { 
                         Console.WriteLine("Program exited.");
                         break;
                     }
-
                     binaryInput = Convert.ToInt32(hexinput, 16);
-
-                    //Check if larger than Uint16...
-                    if (binaryInput > ushort.MaxValue)
-                    {
+                    //Check if larger than Uint16... (i.e. not a 16bit)
+                    if (binaryInput > ushort.MaxValue) {
                         throw new Exception("Input cannot be greater than an unsigned short.");
-                    }
-
-                    // Break condition: end program on 0x0000
-                    if (binaryInput == 0) {
-                        Console.WriteLine("Smell you later.\n");
-                        System.Environment.Exit(0);
                     }
 
                     // Else decode input
@@ -45,14 +40,17 @@ namespace ISA_Decoder_16Bit {
                     // Display output
                     Console.WriteLine(output);
                 }
-                catch (Exception e)
-                {
-
+                catch (Exception e) {
                     Console.WriteLine($"Could not read input '{hexinput}': {e.Message}");
                 }
             }
         }
 
+        /// <summary>
+        /// Decode the input from the user.
+        /// </summary>
+        /// <param name="input">from user</param>
+        /// <returns>a string representing a human-readable text translation of the machine code read and translated by the ISA architecture.</returns>
         private static string DecodeInput(int input) {
 
             InstructionType ourInstruction = null;
@@ -80,6 +78,7 @@ namespace ISA_Decoder_16Bit {
                 string output = ourInstruction.DecodeInstruction(input);
                 return output;
             }
+            // Oh no! Something went a wrong!
             catch (Exception e) {
                 return $"{e.Message} You dun messed up.";
             }
