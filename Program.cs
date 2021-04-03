@@ -16,20 +16,28 @@ namespace ISA_Decoder_16Bit {
 
                 // Convert Input to unsigned 16-bit integer
                 //binaryInput = Convert.ToUInt16(hexinput, 16);   // [TODO]: Convert to UInt16.TryParse()
-            
-                binaryInput = Convert.ToInt32(hexinput, 16);
 
-                // Break condition: end program on 0x0000
-                if (binaryInput == 0) {
-                    Console.WriteLine("Smell you later.\n");
-                    System.Environment.Exit(0);
+                try
+                {
+                    binaryInput = Convert.ToInt32(hexinput, 16);
+
+                    // Break condition: end program on 0x0000
+                    if (binaryInput == 0) {
+                        Console.WriteLine("Smell you later.\n");
+                        System.Environment.Exit(0);
+                    }
+
+                    // Else decode input
+                    string output = DecodeInput(binaryInput);
+
+                    // Display output
+                    Console.WriteLine(output);
                 }
+                catch (Exception e)
+                {
 
-                // Else decode input
-                string output = DecodeInput(binaryInput);
-
-                // Display output
-                Console.WriteLine(output);
+                    Console.WriteLine($"Could not read input '{hexinput}': {e.Message}");
+                }
             }
         }
 
