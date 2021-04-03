@@ -10,6 +10,9 @@
 // ------------------------------------------------------------------------------------------------------------------------
 
 namespace ISA_Decoder_16Bit {
+    /// <summary>
+    /// For determining the operations.
+    /// </summary>
     abstract class InstructionType {
         protected int InstructionTypeID;
         protected int opcodeStartBit;
