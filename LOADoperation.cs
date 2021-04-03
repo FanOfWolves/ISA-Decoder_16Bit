@@ -1,5 +1,19 @@
-using System;
+// ------------------------------------------------------------------------------------------------------------------------
+// File name:       LOADoperation.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
 namespace ISA_Decoder_16Bit {
+
+
+    /// <summary>
+    /// this one operand operation that loads indirectly from a register into another register
+    /// </summary>
     class LOADoperation: Operation {
         string verb = "Load";                    // The main verb used for the message
 
@@ -15,7 +29,9 @@ namespace ISA_Decoder_16Bit {
 
 
   
-
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public LOADoperation() {
 
         }
@@ -58,8 +74,14 @@ namespace ISA_Decoder_16Bit {
             }
         }
 
+
+        /// <summary>
+        /// Decode the second operand of this instruction by maskign it and
+        /// 1)deteriming its value
+        /// 2)assigning it a textual meaning.
+        /// </summary>
+        /// <param name="inputBits"></param>
         private void DecodeSecondOperand(int inputBits) {
-            // Immediate or Register?
           
                 operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);
                 if (operandTwoValue < 0 || operandTwoValue > 15) {

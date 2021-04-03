@@ -1,5 +1,18 @@
+// ------------------------------------------------------------------------------------------------------------------------
+// File name:       STORoperation.cs
+// Project name:    ISA
+// Project description: Decoder for our awesome Detached-Toe 16-bit RISC ISA.
+// ------------------------------------------------------------------------------------------------------------------------
+// Creator's name and email: Harrison Lee Pollitte. pollitteh@etsu.edu. Edgar Bowlin III, bowline@etsu.edu. nelsondk@etsu.edu 
+// Course Name: CSCI-4727 Computer Architecture
+// Course Section: 940
+// Creation Date: 03/31/2021
+// ------------------------------------------------------------------------------------------------------------------------
 using System;
 namespace ISA_Decoder_16Bit {
+    /// <summary>
+    /// this two operand operation takes information from operand two and stores it in operand one according to the addressing mode.
+    /// </summary>
     class STORoperation: Operation {
         string verb = "Store";                    // The main verb used for the message
 
@@ -67,6 +80,11 @@ namespace ISA_Decoder_16Bit {
             }
         }
 
+
+        /// <summary>
+        /// used to get the value of the second operand and give it a meaning
+        /// </summary>
+        /// <param name="inputBits">instruction bits</param>
         private void DecodeSecondOperand(int inputBits) {
             // Immediate or Register?
             if(immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.
@@ -83,6 +101,10 @@ namespace ISA_Decoder_16Bit {
         }
 
 
+        /// <summary>
+        /// used to get the addressing value and its meaning
+        /// </summary>
+        /// <param name="inputBits"></param>
         private void DecodeAddressingValue(int inputBits)
         {
             addressingModeValue = BitUtilities.MaskInput(inputBits, addressingModeStartBit, addressingModeEndBit);
