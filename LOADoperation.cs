@@ -1,3 +1,4 @@
+using System;
 namespace ISA_Decoder_16Bit {
     class LOADoperation: Operation {
         string verb = "Load";                    // The main verb used for the message
@@ -12,16 +13,8 @@ namespace ISA_Decoder_16Bit {
         int operandTwoValue;                    // The value of operand two
         string operandTwoMeaning;               // The meaning of operand two 
 
-        int addressingModeEndBit = 12;
-        int addressingModeStartBit = 11;
-        int addressingModeValue;
-        string addressingModeMeaning;
 
-        int immediateSwitchStartBit = 10;        // The start bit of the immediate switch
-        int immediateSwitchEndBit = 10;          // The end bit of the immediate switch
-        int immediateSwitchValue;               // The value of the immediate switch
-
-        int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
+  
 
         public LOADoperation() {
 
@@ -34,7 +27,7 @@ namespace ISA_Decoder_16Bit {
         /// <returns>a text translation of the instruction</returns>
         public override string DecodeOperation(int inputBits) {
             // Decode Immediate
-            DecodeImmediateSwitch(inputBits);
+
 
             // Decode Operand One
             DecodeFirstOperand(inputBits);
@@ -42,7 +35,8 @@ namespace ISA_Decoder_16Bit {
             // Decode Operand Two
             DecodeSecondOperand(inputBits);
 
-            DecodeAddressingValue(inputBits);
+
+                
 
             // Get readable text
             return GetHumanText();
@@ -66,47 +60,15 @@ namespace ISA_Decoder_16Bit {
 
         private void DecodeSecondOperand(int inputBits) {
             // Immediate or Register?
-            if(immediateSwitchValue == (int)ImmediateSwitchEnum.immediate) { // This is an immediate value.
-                operandTwoValue = BitUtilities.MaskInput(inputBits, immediateOperandStartBit, operandTwoEndBit);
-                operandTwoMeaning = $"#{operandTwoValue}";
-            }
-            else {
+          
                 operandTwoValue = BitUtilities.MaskInput(inputBits, operandTwoStartBit, operandTwoEndBit);
                 if (operandTwoValue < 0 || operandTwoValue > 15) {
                     operandTwoMeaning = $"OP2: Ya messed* up";
                 }
                 operandTwoMeaning = $"r{operandTwoValue}";
-            } 
+             
         }
 
-
-        /// <summary>
-        /// Decode value of the immediateSwitch
-        /// </summary>
-        /// <param name="inputBits">our instruction</param>
-        private void DecodeImmediateSwitch(int inputBits) {
-            immediateSwitchValue = BitUtilities.MaskInput(inputBits, immediateSwitchStartBit, immediateSwitchEndBit);
-        }
-
-        private void DecodeAddressingValue(int inputBits)
-        {
-            addressingModeValue = BitUtilities.MaskInput(inputBits, addressingModeStartBit, addressingModeEndBit);
-            switch (addressingModeValue)
-            {
-                case 1:
-                    addressingModeMeaning = "immediate";
-                    break;
-                case 0:
-                    addressingModeMeaning = "register indirect, indexed";
-                    break;
-                case 2:
-                    addressingModeMeaning = "direct";
-                    break;
-                case 3:
-                    addressingModeMeaning = "Error, invalid addressing mode.";
-                    break;
-            }
-        }
 
 
 
@@ -116,7 +78,7 @@ namespace ISA_Decoder_16Bit {
         /// This badboy looks through ALL our available fields and constructs an English sentence.
         /// </summary>
         private string GetHumanText() {
-            return $"{verb} {operandTwoMeaning} into {operandOneMeaning}, using the addressing mode {addressingModeMeaning}";
+            return $"{verb} the value found in {operandTwoMeaning} into {operandOneMeaning}";
         }
 
     }
