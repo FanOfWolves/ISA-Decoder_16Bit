@@ -1,3 +1,4 @@
+using System;
 namespace ISA_Decoder_16Bit {
     class STORoperation: Operation {
         string verb = "Store";                    // The main verb used for the message
@@ -23,10 +24,12 @@ namespace ISA_Decoder_16Bit {
 
         int immediateOperandStartBit = 0;       // The start bit for our immediate operand (the 2nd operand)
 
+
+       
         public STORoperation() {
 
         }
-
+           
         /// <summary>
         /// Decodes the input bits. This calls all the other functions.
         /// </summary>
@@ -43,7 +46,7 @@ namespace ISA_Decoder_16Bit {
 
             // Decode Operand Two
             DecodeSecondOperand(inputBits);
-
+            
             // Get readable text
             return GetHumanText();
         }
